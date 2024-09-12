@@ -30,7 +30,6 @@ class TestRoutes(TestCase):
 
 
     def test_pages_availability(self):
-
         urls = (
             'notes:home',
             'users:login',
