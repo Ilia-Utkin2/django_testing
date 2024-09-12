@@ -14,10 +14,7 @@ class TestHome(TestCase):
     def setUpTestData(cls):
         cls.author = User.objects.create(username='Лев Толстой')
         cls.note = Note.objects.create(
-            title='Заголовок',
-            text='Текст',
-            author=cls.author
-            )
+            title='Заголовок', text='Текст', author=cls.author)
         cls.reader = User.objects.create(username='Читатель простой')
         cls.client_author = Client()
         cls.client_author.force_login(cls.author)
@@ -30,17 +27,17 @@ class TestHome(TestCase):
     def test_notes_list_for_different_users(self):
         users = (self.client_author, self.client_reader)
         for user in users:
+
             url = reverse('notes:list')
             response = user.get(url)
             object_list = response.context['object_list']
             if user == self.author:
                 self.assertIn(self.note, object_list)
-
             elif user == self.reader:
                 self.assertNotIn(self.note, object_list)
 
     def test_pages_contains_form(self):
-        urls = ( self.url_add, self.url_edit)
+        urls = (self.url_add, self.url_edit)
         for url in urls:
             response = self.client_author.get(url)
             self.assertIn('form', response.context)
