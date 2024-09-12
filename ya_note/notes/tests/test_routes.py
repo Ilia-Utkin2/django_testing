@@ -14,6 +14,7 @@ class TestRoutes(TestCase):
     @classmethod
     def setUpTestData(cls):
 
+
         cls.author = User.objects.create(username='Лев Толстой')
         cls.note = Note.objects.create(title='Заголовок',
                                        text='Текст',
@@ -31,6 +32,7 @@ class TestRoutes(TestCase):
 
     def test_pages_availability(self):
 
+
         urls = (
             'notes:home',
             'users:login',
@@ -45,6 +47,7 @@ class TestRoutes(TestCase):
 
     def test_availability_for_comment_edit_and_delete(self):
 
+
         users_statuses = (
             (self.client_author, HTTPStatus.OK),
             (self.client_reader, HTTPStatus.NOT_FOUND),
@@ -57,6 +60,7 @@ class TestRoutes(TestCase):
 
     def test_redirect_for_anonymous_client(self):
         
+
         login_url = reverse('users:login')
         for url in (
             self.url_edit,
