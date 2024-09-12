@@ -23,7 +23,6 @@ class TestHome(TestCase):
         cls.url_add = reverse('notes:add')
         cls.url_edit = reverse('notes:edit', args=(cls.note.slug,))
 
-
     def test_notes_list_for_different_users(self):
         users = (self.client_author, self.client_reader)
         for user in users:
@@ -35,9 +34,9 @@ class TestHome(TestCase):
             elif user == self.reader:
                 self.assertNotIn(self.note, object_list)
 
-
     def test_pages_contains_form(self):
         urls = (self.url_add, self.url_edit)
+        
         for url in urls:
             response = self.client_author.get(url)
             self.assertIn('form', response.context)
