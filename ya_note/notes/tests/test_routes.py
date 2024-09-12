@@ -47,7 +47,7 @@ class TestRoutes(TestCase):
             (self.client_reader, HTTPStatus.NOT_FOUND),
         )
         for user, status in users_statuses:
-            for url in (self.url_detail, self.url_delete, self.u):
+            for url in (self.url_detail, self.url_delete, self.url_edit):
                 with self.subTest(user=user, url=url):
                     response = user.get(url)
                     self.assertEqual(response.status_code, status)
