@@ -34,7 +34,7 @@ class TestRoutes(TestCase):
             'users:login',
             'users:logout',
             'users:signup',
-        )
+            )
         for name in urls:
             with self.subTest(name=name):
                 url = reverse(name)
@@ -45,7 +45,7 @@ class TestRoutes(TestCase):
         users_statuses = (
             (self.client_author, HTTPStatus.OK),
             (self.client_reader, HTTPStatus.NOT_FOUND),
-        )
+            )
         for user, status in users_statuses:
             for url in (self.url_detail, self.url_delete, self.url_edit):
                 with self.subTest(user=user, url=url):
@@ -59,7 +59,7 @@ class TestRoutes(TestCase):
             self.url_detail,
             self.url_delete,
             self.url_list
-        ):
+            ):
             with self.subTest(url=url):
                 redirect_url = f'{login_url}?next={url}'
                 response = self.client.get(url)
