@@ -1,5 +1,5 @@
 from django.contrib.auth import get_user_model
-from django.test import TestCase
+from django.test import Client ,TestCase
 from django.urls import reverse
 
 from notes.forms import NoteForm
@@ -17,13 +17,19 @@ class TestHome(TestCase):
                                        text='Текст',
                                        author=cls.author)
         cls.reader = User.objects.create(username='Читатель простой')
+        cls.client_author = Client()
+        cls.client_author.force_login(cls.author)
+        cls.client_reader = Client()
+        cls.client_reader.force_login(cls.reader)
+        cls.url_add = reverse('notes:add')
+        cls.url_edit = reverse('notes:edit', args=(cls.note.slug,))
+
 
     def test_notes_list_for_different_users(self):
-        users = (self.author, self.reader)
+        users = (self.client_author, self.client_reader)
         for user in users:
-            self.client.force_login(user)
             url = reverse('notes:list')
-            response = self.client.get(url)
+            response = user.get(url)
             object_list = response.context['object_list']
             if user == self.author:
                 self.assertIn(self.note, object_list)
@@ -32,15 +38,8 @@ class TestHome(TestCase):
                 self.assertNotIn(self.note, object_list)
 
     def test_pages_contains_form(self):
-        urls = (
-            ('notes:add', None),
-            ('notes:edit', (self.note.slug,))
-        )
-        for name, args in urls:
-            urls = reverse(name, args=args)
-            self.client.force_login(self.author)
-
-            response = self.client.get(urls)
+        urls = ( self.url_add, self.url_edit)
+        for url in urls:
+            response = self.client_author.get(url)
             self.assertIn('form', response.context)
-
             self.assertIsInstance(response.context['form'], NoteForm)
