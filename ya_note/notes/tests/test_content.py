@@ -10,7 +10,6 @@ User = get_user_model()
 
 class TestHome(TestCase):
 
-
     @classmethod
     def setUpTestData(cls):
         cls.author = User.objects.create(username='Лев Толстой')
@@ -27,7 +26,6 @@ class TestHome(TestCase):
 
     def test_notes_list_for_different_users(self):
 
-
         users = (self.client_author, self.client_reader)
         for user in users:
             url = reverse('notes:list')
@@ -37,9 +35,9 @@ class TestHome(TestCase):
                 self.assertIn(self.note, object_list)
             elif user == self.reader:
                 self.assertNotIn(self.note, object_list)
+                
 
     def test_pages_contains_form(self):
-
 
         urls = (self.url_add, self.url_edit)
         for url in urls:
