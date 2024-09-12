@@ -25,7 +25,6 @@ class TestHome(TestCase):
 
 
     def test_notes_list_for_different_users(self):
-        
 
         users = (self.client_author, self.client_reader)
         for user in users:
