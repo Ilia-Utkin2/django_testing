@@ -28,7 +28,6 @@ class TestRoutes(TestCase):
         cls.url_delete = reverse('notes:delete', args=(cls.note.slug,))
         cls.url_list = reverse('notes:list')
 
-
     def test_pages_availability(self):
         urls = (
             'notes:home',
