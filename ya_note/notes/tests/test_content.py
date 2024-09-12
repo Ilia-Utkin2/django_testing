@@ -25,6 +25,7 @@ class TestHome(TestCase):
 
 
     def test_notes_list_for_different_users(self):
+        
 
         users = (self.client_author, self.client_reader)
         for user in users:
@@ -33,9 +34,10 @@ class TestHome(TestCase):
             object_list = response.context['object_list']
             if user == self.author:
                 self.assertIn(self.note, object_list)
+
             elif user == self.reader:
                 self.assertNotIn(self.note, object_list)
-                
+
 
     def test_pages_contains_form(self):
 
