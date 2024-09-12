@@ -29,7 +29,6 @@ class TestHome(TestCase):
             url = reverse('notes:list')
             response = user.get(url)
             object_list = response.context['object_list']
-            
             if user is self.author:
                 self.assertIn(self.note, object_list)
             elif user == self.reader:
